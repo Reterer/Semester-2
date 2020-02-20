@@ -1,8 +1,11 @@
 #! /usr/bin/env bash
-
-I=1
-while read
+COUNT=0
+LINES=0
+IFS=""
+while read LINE
 do
-    ((I=I+1))
+    ((COUNT=COUNT+${#LINE}))
+    ((LINES=LINES+1))
 done < "$1"
-echo $I
+echo $COUNT
+echo $LINES
