@@ -1,0 +1,27 @@
+#-----------------LN------------------#
+reterer@comp:~$ ln -s /mnt/d/Study/Sem2/ ./
+reterer@comp:~$ ln -sr /mnt/d/Study/Sem2/ Sem2Rel
+reterer@comp:~$ ls -l
+total 0
+lrwxrwxrwx 1 reterer reterer 18 Feb 24 14:15 Sem2 -> /mnt/d/Study/Sem2/
+lrwxrwxrwx 1 reterer reterer 22 Feb 24 14:33 Sem2Rel -> ../../mnt/d/Study/Sem2
+
+reterer@comp:~$ mkdir dir && mv Sem2Rel dir
+reterer@comp:~$ cd dir && ls -l
+total 0
+lrwxrwxrwx 1 reterer reterer 22 Feb 24 14:33 Sem2Rel -> ../../mnt/d/Study/Sem2
+reterer@comp:~/dir$ cd Sem2Rel
+bash: cd: Sem2Rel: No such file or directory
+#--------------
+reterer@comp:~$ touch 1
+reterer@comp:~$ ln 1 2
+reterer@comp:~$ ls -li
+total 0
+1125899906942561 -rw-rw-rw- 2 reterer reterer  0 Feb 24 14:43 1
+1125899906942561 -rw-rw-rw- 2 reterer reterer  0 Feb 24 14:43 2
+ 562949953521598 lrwxrwxrwx 1 reterer reterer 18 Feb 24 14:15 Sem2 -> /mnt/d/Study/Sem2/
+reterer@comp:~$ ls -li /mnt/d/Study/
+total 0
+281474976732797 drwxrwxrwx 1 reterer reterer 512 Feb 24 13:56 Sem2
+#-----------------FIND----------------#
+
