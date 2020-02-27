@@ -2,15 +2,11 @@
 #include "vector.h"
 
 int main(){
-    VectorInt* vec = makeVectorInt(10);
-    VectorIntSet(vec, 0, 666);
-    for(int i = 0; i < vec->size; ++i){
-	printf("%i %i\n", i, VectorIntGet(vec, i));
+    Vector* v = NULL;
+    VectorInit(&v, 10);
+    VectorFill(v, 123);
+    for(size_t i = 0; i < VectorSizeGet(v); ++i){
+        printf("%f\n", VectorGet(v, i));
     }
-    VectorIntResize(vec, 15);
-    for(int i = 0; i < vec->size; ++i){
-	printf("%i %i\n", i, VectorIntGet(vec, i));
-    }
-    delVectorInt(vec);
-    return 0;   
+    return 0;
 }

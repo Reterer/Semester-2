@@ -8,30 +8,27 @@
 # find ... | xargs ls -l		->		ls -l file1 file2 file3 ...
 
 20 утилит разобрать, 3 из списка - подробно
-# tar -c ... | tee >(md5sum > sum.txt) | ssh ...
-
-# cat
+ tar -c ... | tee >(md5sum > sum.txt) | ssh ...
 # tee
 # sum
 # md5sum
 # sha1sum
-! awk
+? awk
+sed
 # wc
-# gzip, bzip
+ gzip, bzip
 # od, xxd
 # du, df -h
-? dim
-# file
-# cmp
-!? vi/vim
-sed
+? vim
+file
+cmp
 split
 diff + patch
 sort
-join
-cut
+#join
+#cut
 paste
-tr
+#tr
 mktemp
 comm
 dd
@@ -41,13 +38,3 @@ git
 -- Отбери 3 самых интересных утилиты узнай о них
 -- Сделай 1 ую лабу
 
-/etc/passwd
-/etc/group
-/etc/shadow
-
-#Не работает :(
-cut -f 1,4 -d ':' /etc/passwd > gd.txt
-sort -k 2 -t ":" -n gd.txt > sorted.txt 
-cut -f 1,3 -d ':' /etc/group > dg.txt
-sort -k 2 -t ":" -n dg.txt > gorted.txt
-join -t ':' -j 2 -o 2.1 1.1 gorted.txt sorted.txt

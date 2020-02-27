@@ -1,17 +1,23 @@
 #pragma once
 #include <stdlib.h>
+#define TYPE double
 
-typedef struct { 
-    int* _currmass;
-    int size;
-} VectorInt;
+typedef struct {
+    TYPE* _mass;
+    size_t _size;
+} Vector;
 
+int VectorInit(Vector** vec, size_t size);
+void VectorDestroy(Vector* vec);
 
-VectorInt* makeVectorInt(int size);
-void delVectorInt(VectorInt* vec);
-int VectorIntGet(VectorInt* vec, int index);
-int VectorIntEq(VectorInt* A, VectorInt* B);
-int VectorIntIsEmpty(VectorInt* vec);
-int VectorIntLen(VectorInt* vec);
-void VectorIntSet(VectorInt* vec, int index, int value);
-void VectorIntResize(VectorInt* vec, int size);
+TYPE VectorGet(Vector* vec, size_t index);
+void VectorSet(Vector* vec, size_t index, TYPE val);
+
+int VectorResize(Vector* vec, size_t size);
+size_t VectorSizeGet(Vector* vec);
+
+void VectorFill(Vector* vec, TYPE val);
+int VectorCopy(Vector* from, Vector* to);
+
+// PUSH BACK
+// POP BACK
