@@ -33,11 +33,10 @@ using namespace std;
 
 
 //lvl (n, -1)
-void bfs(const graph& gr, vector <int> lvl, int v){
+void bfs(const graph& gr, vector <int>& lvl, int v){
     queue <int> q;
     q.push(v);
     lvl[v] = 0;
-
     while(!q.empty()){
         int p = q.front();
         q.pop();
@@ -48,19 +47,6 @@ void bfs(const graph& gr, vector <int> lvl, int v){
             q.push(u);
         }
     }
-}
-
-void dfs(const graph& gr, vector <int>& used, int v ,int p){
-    // if(used[v] == 1){
-    //     // Мы в цикле!!
-    // }
-    if(used[v])
-        return;
-    used[v] = 1;
-    for(int i = 0; i < gr[v].size(); ++i){
-            dfs(gr, used, gr[v][i], v);
-    }
-    // used[v] = 2;
 }
 
 int main() {
@@ -74,9 +60,8 @@ int main() {
         gr[u].push_back(v);
         // gr[v].push_back(u); // Неорентированный граф
     }
-    vector <int> lvl(n,-1);
-    //vector <int> used(n);
-    bfs(gr,lvl,0);
+    vector <int> lvl(n, -1);
+    
     //Компоненты связанности
     // vector <int> used(n);
     // int component = 0;

@@ -1,6 +1,6 @@
 #pragma once
 #include <stdlib.h>
-#define TYPE double
+#define TYPE float 
 
 typedef struct {
     TYPE* _mass;
@@ -19,5 +19,7 @@ size_t VectorSizeGet(Vector* vec);
 void VectorFill(Vector* vec, TYPE val);
 int VectorCopy(Vector* from, Vector* to);
 
-// PUSH BACK
-// POP BACK
+int VectorPushBack(Vector* vec, TYPE val);
+TYPE VectorBack(Vector* vec);
+int VectorPopBack(Vector* vec);
+

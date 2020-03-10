@@ -8,30 +8,30 @@
 # find ... | xargs ls -l		->		ls -l file1 file2 file3 ...
 
 20 утилит разобрать, 3 из списка - подробно
- tar -c ... | tee >(md5sum > sum.txt) | ssh ...
+tar -c ... | tee >(md5sum > sum.txt) | ssh ...
 # tee
 # sum
 # md5sum
 # sha1sum
 ? awk
-sed
+!sed
 # wc
  gzip, bzip
 # od, xxd
 # du, df -h
 ? vim
 file
-cmp
-split
+#cmp
+#split
 diff + patch
-sort
+#sort
 #join
 #cut
-paste
+#paste
 #tr
 mktemp
 comm
-dd
+#dd
 git
 
 -- Сравни с тетрадью

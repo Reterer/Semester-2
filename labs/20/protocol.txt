@@ -20,6 +20,7 @@ total 0
 reterer@comp:~$ ls -li /mnt/d/Study/
 total 0
 281474976732797 drwxrwxrwx 1 reterer reterer 512 Feb 24 13:56 Sem2
+
 #-----------------FIND----------------#
 reterer@comp:~$ cp $(find  /mnt/d/ -iname "*.png" -ctime -2) ./newPng/
 reterer@comp:~$ ls newPng/
@@ -189,4 +190,179 @@ reterer@comp:~$ echo "123hj 2j31k2k1h24kj" | tr -d [:alpha:]
 123 2312124
 
 #-------------cmp--------------#
+reterer@comp:~$ cat a
+Something ...
+Something ...
+Something ...
+Something ...
+reterer@comp:~$ cat b
+Something ...
+Something ...
+Something ...
+.............
+Something ...
+reterer@comp:~$ cmp a a
 
+reterer@comp:~$ cmp  a b
+a b differ: byte 43, line 4
+
+reterer@comp:~$ cmp -l a b
+43 123  56
+44 157  56
+45 155  56
+46 145  56
+47 164  56
+48 150  56
+49 151  56
+50 156  56
+51 147  56
+52  40  56
+cmp: EOF on a after byte 56
+
+reterer@comp:~$ vim -O a b
+2 files to edit
+
+reterer@comp:~$ cat a b
+Header1
+Something ...
+Something ...
+Something ...
+Something ...
+Header2
+Something ...
+Something ...
+Something ...
+Something ...
+
+reterer@comp:~$ cmp a b
+a b differ: byte 7, line 1
+reterer@comp:~$ cmp -i 7:7 a b
+
+#-------------sort-------------#
+reterer@comp:~$ sort -R /etc/passwd | head -n 5 > passwd
+reterer@comp:~$ cat passwd
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+
+reterer@comp:~$ sort -t: -k1 -d passwd
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+
+reterer@comp:~$ sort -t: -k1 -r passwd
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+
+reterer@comp:~$ sort -t: -k3 -n passwd
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+lxd:x:105:65534::/var/lib/lxd/:/bin/false
+
+reterer@comp:~$ sort -t: -k1 -c passwd
+sort: passwd:3: disorder: backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+reterer@comp:~$ sort -t: -k1 passwd > passwd_sorted
+reterer@comp:~$ sort -t: -k1 -c passwd_sorted
+reterer@comp:~$
+
+#-------------sed--------------#
+reterer@comp:~/Sem2/GitSem2/C/Vector$ gcc main.c vector.c
+vector.c: In function ‘VectorGet’:
+vector.c:21:47: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 2 has type ‘size_t {aka long unsigned int}’ [-Wformat=]
+         printf("WARNING: OUT OF RANGE index: %u  size: %u\n", index, vec->_size);
+                                              ~^
+                                              %lu
+reterer@comp:~/Sem2/GitSem2/C/Vector$ sed -i 's\%u\%lu\g' vector.c
+reterer@comp:~/Sem2/GitSem2/C/Vector$ gcc main.c vector.c
+
+
+
+reterer@comp:~$ sed -n '/reterer/p' /etc/passwd
+reterer:x:1000:1000:,,,:/home/reterer:/bin/bash
+
+reterer@comp:~$ sed -n '1p' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+
+reterer@comp:~$ sed -n '1,3p' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+
+reterer@comp:~$ sed '1,30d' /etc/passwd
+rtkit:x:111:115:RealtimeKit,,,:/proc:/usr/sbin/nologin
+usbmux:x:112:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+pulse:x:113:116:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+
+#------------split--------------#
+reterer@comp:~$ base64 /dev/urandom | head -c 20M > file
+reterer@comp:~$ ls -lh file 
+rrw-rw-rw- 1 reterer reterer 20M Mar  4 14:28 file
+
+reterer@comp:~$ split -b 5M file
+reterer@comp:~$ ls -lh
+total 42M
+lrwxrwxrwx 1 reterer reterer   18 Feb 24 14:15 Sem2 -> /mnt/d/Study/Sem2/
+-rw-rw-rw- 1 reterer reterer  20M Mar  4 14:28 file
+-rw-rw-rw- 1 reterer reterer 5.0M Mar  4 14:29 xaa
+-rw-rw-rw- 1 reterer reterer 5.0M Mar  4 14:29 xab
+-rw-rw-rw- 1 reterer reterer 5.0M Mar  4 14:29 xac
+-rw-rw-rw- 1 reterer reterer 5.0M Mar  4 14:29 xad
+reterer@comp:~$ rm x*
+
+reterer@comp:~$ split -n 2 file
+reterer@comp:~$ ls -lh
+total 43M
+lrwxrwxrwx 1 reterer reterer  18 Feb 24 14:15 Sem2 -> /mnt/d/Study/Sem2/
+-rw-rw-rw- 1 reterer reterer 20M Mar  4 14:28 file
+-rw-rw-rw- 1 reterer reterer 10M Mar  4 14:29 xaa
+-rw-rw-rw- 1 reterer reterer 10M Mar  4 14:29 xab
+reterer@comp:~$ cat x* > file_rec
+reterer@comp:~$ sha256sum file file_rec
+91793a3d0e54d0c909b133090817cb0a4f8e64e5c827a810b1f153e0a5a14646  file
+91793a3d0e54d0c909b133090817cb0a4f8e64e5c827a810b1f153e0a5a14646  file_rec
+
+#------------paste--------------#
+reterer@comp:~$ paste file file1
+A       A
+B       B
+C       C
+D       D
+        E
+F       F
+
+reterer@comp:~$ paste -d: file file1
+A:A
+B:B
+C:C
+D:D
+:E
+F:F
+:
+reterer@comp:~$ paste -s file file1
+A       B       C       D               F
+A       B       C       D       E       F
+
+#------------dd-------------#
+reterer@comp:~$ dd if=/dev/zero of=file bs=1M count=10
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0.0111883 s, 937 MB/s
+
+reterer@comp:~$ dd if=file of=file1 bs=1M
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0.0163679 s, 641 MB/s
+
+#-----------diff------------#
+
+
+#--- TOTAL 18 ---#

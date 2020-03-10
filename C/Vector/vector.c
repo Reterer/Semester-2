@@ -18,13 +18,13 @@ void VectorDestroy(Vector* vec){
 
 TYPE VectorGet(Vector* vec, size_t index){
     if(index >= vec->_size)
-        printf("WARNING: OUT OF RANGE index: %u  size: %u\n", index, vec->_size);
+        printf("WARNING: OUT OF RANGE index: %lu  size: %lu\n", index, vec->_size);
     return vec->_mass[index];
 }
 
 void VectorSet(Vector* vec, size_t index, TYPE val){
     if(index >=  vec->_size)
-        printf("WARNING: OUT OF RANGE index: %u  size: %u\n", index, vec->_size);
+        printf("WARNING: OUT OF RANGE index: %lu  size: %lu\n", index, vec->_size);
     vec->_mass[index] = val;
 }
 
@@ -55,4 +55,27 @@ int VectorCopy(Vector* from, Vector* to){
         to->_mass[i] = from->_mass[i];
     }
     return 1;
+}
+
+int VectorPushBack(Vector* vec, TYPE val){
+    size_t back = VectorSizeGet(vec);
+    int res = VectorResize(vec, back+1);
+    if(!res)
+        return res;
+    VectorSet(vec, back, val);
+    return res;
+}
+
+TYPE VectorBack(Vector* vec){
+    size_t size = VectorSizeGet(vec)-1;
+    if(size < 0)
+        printf("WARNING: Back, vector is empty\n");
+    return VectorGet(vec, size);
+}
+
+int VectorPopBack(Vector* vec){
+    size_t size = VectorSizeGet(vec)-1;
+    if(size < 0)
+        printf("WARNING: PopBack, vector is empty\n");
+    return VectorResize(vec, size);
 }
