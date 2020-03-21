@@ -3,7 +3,7 @@
 # Потеряна, так как я случайно её удалил...
 
 # Данный скрипт меняет в наденных файлах \ на /
-# script [OPTION]... [--] [DIR]...
+# script [OPTION]... [DIR]...
 # Краткое описане возможностей ключей:
 # -r            reverse, то есть программа будет менять / на \ 
 # -l            переходить по  симолическим ссылкам
@@ -35,7 +35,7 @@ function print_help {
     DESCRIPTION
     \n\tThis script replaces \ with / 
     \nUSAGE
-    \n\t$0 [OPTION]... [--] [DIR]...
+    \n\t$0 [OPTION]... [DIR]...
     \nOPTIONS
     \n\t-r\t\treverse: the program will replace / with \ 
     \n\t-l\t\tfollows symbolic links
@@ -43,7 +43,6 @@ function print_help {
     \n\t-name\t[ptrn]\tThe pattern to be searched. By default, the pattern 'Makefile*' is used 
     \n\t-iname\t[ptrn]\tthe same as -name, but case insensitive
     \n\t-norecursion\tdisable recursion
-    \n\t--\t\tmarks the end of keys
     \nEXIT CODES
     \n\t0\tit's ok
     \n\t1\tinvalid keys
@@ -63,7 +62,7 @@ function find_and_replace {
         command_sed='s!\\!/!g'
     fi
 
-    find $link_key "$@" -type f $recursion_key $name_key "$name_pattern"\
+    find $link_key "$@" -type f $recursion_key $name_key "$name_pattern" \
     -exec sed -i "$command_sed" "{}" \;
 }
 
