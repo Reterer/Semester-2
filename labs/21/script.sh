@@ -23,11 +23,11 @@
 recursion_key=""
 link_key=""
 
-directions_list="./"
 name_key="-name"
 name_pattern="Makefile*"
 
 is_help_mode=0
+is_reverse_mode=0
 
 # Вывод справки скрипта
 function print_help {
@@ -48,12 +48,80 @@ function print_help {
     \n\t0\tit's ok
     \n\t1\tinvalid keys
     \nAUTHOR
-    \n\t written by Egor Sukhanov egor-suhanov2012@ya.ru
+    \n\t written by Egor Sukhanov (egor-suhanov2012@ya.ru)
     "
     echo -e $help_text
     exit 1
 }
 
+function find_and_replace {
+    if (($# > 0)); then
+        find $link_key "$@" $recursion_key $name_key "$name_pattern"
+    else
+        find $link_key "./" $recursion_key $name_key "$name_pattern"
+    fi
+}
 
-# handle 
-print_help
+# handle options
+function print_mesage_invalid_option_and_exit {
+    echo -e "key $1 is invalid.\nTry $0 -help for more information."
+    exit 1
+}
+
+was_name_key=0
+function handle_name_option {
+    if ((was_name_key)); then
+        print_mesage_invalid_option_and_exit $1
+    fi
+    
+    # Если не существует второй аргумент, то
+    if [[ ! "$2" ]]; then
+        print_mesage_invalid_option_and_exit $1
+    fi
+
+    was_name_key=1
+    name_key=$1
+    name_pattern="$2"
+}
+
+while (($# > 0)); do
+    case "$1" in
+    -r) 
+        is_reverse_mode=1
+        ;;
+    -l) 
+        link_key="-L"
+        ;;
+    -help)
+        is_help_mode=1
+        ;;
+    -name)
+        handle_name_option "$1" "$2"
+        shift
+        ;;
+    -iname)
+        handle_name_option "$1" "$2"
+        shift
+        ;;
+    -norecursion)
+        recursion_key="-maxdepth 0"
+        ;;
+    --)
+        shift
+        break 
+        ;;
+    -*) 
+        print_mesage_invalid_option_and_exit "$1"
+        ;;
+    *) 
+        break
+        ;;
+    esac
+    shift
+done
+
+if (($is_help_mode)); then
+    print_help
+else
+    find_and_replace "$@"
+fi
