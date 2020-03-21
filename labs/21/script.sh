@@ -55,11 +55,16 @@ function print_help {
 }
 
 function find_and_replace {
-    if (($# > 0)); then
-        find $link_key "$@" $recursion_key $name_key "$name_pattern"
+    # set up variables
+    command_sed=""
+    if (($is_reverse_mode)); then
+        command_sed='s!/!\\!g'
     else
-        find $link_key "./" $recursion_key $name_key "$name_pattern"
+        command_sed='s!\\!/!g'
     fi
+
+    find $link_key "$@" -type f $recursion_key $name_key "$name_pattern"\
+    -exec sed -i "$command_sed" "{}" \;
 }
 
 # handle options
@@ -71,16 +76,16 @@ function print_mesage_invalid_option_and_exit {
 was_name_key=0
 function handle_name_option {
     if ((was_name_key)); then
-        print_mesage_invalid_option_and_exit $1
+        print_mesage_invalid_option_and_exit "$1"
     fi
     
     # Если не существует второй аргумент, то
     if [[ ! "$2" ]]; then
-        print_mesage_invalid_option_and_exit $1
+        print_mesage_invalid_option_and_exit "$1"
     fi
 
     was_name_key=1
-    name_key=$1
+    name_key="$1"
     name_pattern="$2"
 }
 
@@ -123,5 +128,9 @@ done
 if (($is_help_mode)); then
     print_help
 else
-    find_and_replace "$@"
+    if (($# > 0)); then
+        find_and_replace "$@"
+    else
+        find_and_replace "./"
+    fi
 fi
