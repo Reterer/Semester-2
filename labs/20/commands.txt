@@ -23,12 +23,13 @@ tar -c ... | tee >(md5sum > sum.txt) | ssh ...
 file
 #cmp
 #split
-diff + patch
+#diff + patch
 #sort
 #join
 #cut
 #paste
 #tr
+grep
 mktemp
 comm
 #dd

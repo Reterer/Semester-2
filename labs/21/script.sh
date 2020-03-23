@@ -43,6 +43,10 @@ function print_help {
     \n\t-name\t[ptrn]\tThe pattern to be searched. By default, the pattern 'Makefile*' is used 
     \n\t-iname\t[ptrn]\tthe same as -name, but case insensitive
     \n\t-norecursion\tdisable recursion
+    \nEXAMPLES
+    \n\t$0 src\t\t\t\t\tfind \"Makefile*\" in src and replace \ with /
+    \n\t$0 -r srv\t\t\t\tfind \"Makefile*\" in src and replace / with \ 
+    \n\t$0 -name \"foo*\" first_dir second_dir\tfind \"foo*\" in first_dir and second_dir and replace they
     \nEXIT CODES
     \n\t0\tit's ok
     \n\t1\tinvalid keys
@@ -109,10 +113,6 @@ while (($# > 0)); do
         ;;
     -norecursion)
         recursion_key="-maxdepth 0"
-        ;;
-    --)
-        shift
-        break 
         ;;
     -*) 
         print_mesage_invalid_option_and_exit "$1"
