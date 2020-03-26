@@ -1,0 +1,46 @@
+\noindent Полагая
+$$
+    y = g (x)
+$$
+и принимая во внимание теорему  296, имеем для $0 < |h| < \varepsilon  $
+с надлежаще выбранным  $\varepsilon > 0$\ :
+\begin{gather*}
+    0 = 0 - 0 = f (x + h, g (x + h)) - f (x,g (x)) =\\
+    = f (x + h, y + k) - f (x, y) = \\
+    = hf_1 (x, g (x)) + kf_2 (x, g (x)) + h\varphi (h) + k\psi (h)
+\end{gather*}
+, где
+$$
+    \lim_{ h = 0} \varphi (h) = 0, \lim_{ h = 0} \psi (h) = 0\text{.}
+$$
+Но
+$$
+    f_2 (x, g (x)) + \psi (h) \neq 0
+$$
+для $0 < |h| < \varepsilon_1$ с надлежаще выбранным $\varepsilon_1$,  $0 < \varepsilon_1 < \varepsilon.$
+По-\\этому
+$$
+        \frac{k}{h} = - \frac{f_1 (x, g ) + \psi (h)}{f_2 (x, g (x)) + \psi (h)}
+$$
+и, следовательно,
+$$
+        \lim_{h = 0} = - \frac{f_1 (x, g (x))}{f_2 (x, g (x))}\text{.}
+$$
+\par\textbf{Пример} (снова умышленно старый):
+$$
+        f (x,y) = x^2 + y^2 -1,\quad |x| < 1,\quad y > 0\text{.}
+$$
+Здесь
+\begin{align*}
+        & f_2 (x,y) = 2y > 0,\\
+        & f_1 (x,y) = 2x,
+\end{align*}
+и, следовательно,
+$$
+        g' (x) = -\frac{2x}{2y} = -\frac{x}{y} = -\frac{x}{g (x)}\text{.}
+$$
+(И действитвельно, как мы давно уже знаем,
+\begin{align*}
+    & y = g (x) = \sqrt{1 - x^2},\\
+    & g' (x) = -\frac x{\sqrt{1 - x^2}}\text{.)}
+\end{align*}

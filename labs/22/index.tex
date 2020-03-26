@@ -1,0 +1,74 @@
+\documentclass[12pt, a5paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtext}
+\usepackage[russian]{babel}
+
+% Устанавливаем отступы от краёв страницы
+\usepackage{geometry}
+%\geometry{papersize={14.8 cm,21 cm}}
+\geometry{left=1.6cm}
+\geometry{right=1.6cm}
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+
+% Шаманим межстрочные интервалы, что бы было похоже на оригинал
+\renewcommand{\baselinestretch}{.9}
+\jot = 1pt
+
+% Шаманим колонтитулы
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[C]{\textit{Глава \thechapter}} 
+\fancyfoot{}
+
+% Шаманим заголовки (оформление новой главы)
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\filcenter\thispagestyle{empty}}{\textit{Глава \thechapter}\vspace{2em}}{0pt}{\bfseries\MakeUppercase}
+\titlespacing\chapter{0pt}{0pt plus 4pt minus 4pt}{24pt plus 2pt minus 2pt}
+
+% Это уже не так обязательно, но есть интересная штука,
+% Которая позволит проще работать с теорамами
+% Шаманим стили
+\newtheoremstyle{indented}
+  {.25em}% space before
+  {.25em}% space after
+  {\itshape}% body font
+  {1.25em}% indent
+  {\bfseries}% header font
+  {.}% punctuation
+  {.5em}% after theorem header
+  {}% header specification (empty for default)
+
+%Сами окружения теорем, определений и докозательств
+\makeatletter
+\newenvironment{breakproof}[1][\proofname]{
+  \small{Д о к а з а т е л ь с т в о}\@addpunct{.} \ignorespaces}{%
+  \@endpefalse}
+\makeatother
+
+\theoremstyle{indented}
+\newtheorem{theorem}{Теорема}
+\newtheorem{definition}{Определение}
+
+% Так как это ЛР, то у меня нет всей книги, 
+% Поэтому вручную устанавливаю счетчики: 
+% Номер страницы и главы
+% И счетчик теорем
+\setcounter{chapter}{18}
+\setcounter{page}{276}
+\setcounter{theorem}{315}
+\setcounter{definition}{72}
+
+
+\begin{document}
+    % типо тут могут быть еще главы, а в самом начале титульный лист и т.д
+    % пхпхп повезло мне со сменой глав
+    \include{chapter18}
+    \include{chapter19}
+\end{document}

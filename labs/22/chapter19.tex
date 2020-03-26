@@ -1,0 +1,35 @@
+\chapter{Круговые функции}
+\par Речь будет итти о функциях, обратных к тригонометрическим.
+
+\begin{theorem}\label{t_once_sin}
+    Для $|x| \leqslant 1$ существует точно одно $y$ такое, что 
+   $$\sin y = x,\quad |y| \leqslant \frac {\pi}{2}$$  
+\end{theorem}
+
+\begin{breakproof}
+    Согласно теореме 278, $\sin y$ монотонно возрастает в 
+    $\left\lbrack -\frac{\pi}{2}, \frac{\pi}{2} \right\rbrack$. Так как
+    $$\sin\left(-\frac{\pi}{2}\right) = -1,\quad \sin \frac{\pi}{2} = 1\text{,}$$
+    то, следовательно в силу теоремы 148, требуемое 
+    y существует и однозначно определено.
+\end{breakproof}
+\begin{definition}
+    $\mathrm{arc\ sin}\ x$ для $\;|x| \leqslant 1\;$ есть $y$ из теоремы ~\ref{t_once_sin}.\par
+    \textnormal{$\mathrm{arc\ sin}$ читается: арксинус (или аркус синус).}
+\end{definition}
+\begin{theorem}
+    $\frac{d\ \mathrm{arc\ sin}\ x}{dx} = \frac{1}{\sqrt{1 - x^2}} \text{ при  } |x| < 1$.
+\end{theorem}
+
+\begin{breakproof}
+    Положим 
+    $$ y = \mathrm{arc\ sin}\ x,$$
+    тогда
+    \begin{gather*}
+        |y| < \frac {\pi}{2},\\
+        x = \sin y,\\
+        \frac {dx}{dy} = \cos y > 0.
+    \end{gather*}
+    и, следовательно, по теореме 313
+    $$\frac{dy}{dx} = \frac{1}{\frac{dx}{dy}} = \frac{1}{\cos y} = \frac{1}{\sqrt{1 - \sin^2y}} = \frac{1}{\sqrt{1-x^2}}$$
+\end{breakproof}
