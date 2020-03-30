@@ -1,0 +1,15 @@
+48a49,58
+> \usepackage{xstring}
+> \usepackage{ifthen}
+> \newcounter{mytest_idx}
+> \newcommand{\insertSpaces}[1]{
+>     \setcounter{mytest_idx}{0}
+>     \StrLen{#1}[\myStrLen]
+>     \whiledo{\value{mytest_idx}<\myStrLen}{\StrChar{#1}{\value{mytest_idx}}\ \stepcounter{mytest_idx}}\StrChar{#1}{\myStrLen}
+> }
+> 
+> 
+51c61
+<   \small{Д о к а з а т е л ь с т в о}\@addpunct{.} \ignorespaces}{%
+---
+>   \small\insertSpaces{Доказательсво}\@addpunct{.} \ignorespaces}{%

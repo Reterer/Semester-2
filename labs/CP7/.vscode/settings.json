@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "vector_template.h": "c",
+        "log.h": "c",
+        "stdlib.h": "c"
+    }
+}
