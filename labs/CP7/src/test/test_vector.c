@@ -1,8 +1,5 @@
 #include <log/log.h>
-
-#define T int
-#include <vector/vector_template.c>
-#undef T
+#include "../vector/vector.h"
 
 static void test_init(){
     vector_int* v;

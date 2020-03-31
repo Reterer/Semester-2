@@ -5,10 +5,9 @@
 typedef struct {
     vector_int* a;
     vector_int* b;
-    vector_int* c;
+    vector_double* c;
     size_t columns;
 } matrix;
-
 typedef struct {
     matrix* m;
     size_t row;
@@ -32,11 +31,11 @@ bool m_read(matrix* m, FILE* file);
 bool m_print(matrix*m, FILE* file, matrix_io_mode mode);
 
 /* Get value of the element of matrix */
-int m_get(matrix* m, size_t row, size_t col);
+double m_get(matrix* m, size_t row, size_t col);
 
 /* Set value of the element of matrix           */
 /* If the element is zero,then it does nothing */
-void m_set(matrix* m, size_t row, size_t col, int val);
+void m_set(matrix* m, size_t row, size_t col, double val);
 
 /* Returns an iterator pointing to the beginning of a row/col */
 m_iter m_begin(matrix* m);
@@ -48,6 +47,7 @@ m_iter m_end_by_row(matrix* m, size_t row);
 m_iter m_end_by_col(matrix* m, size_t col);
 
 /**********************************************************/
+/*
 void mi_next_col(m_iter* i);
 void mi_prew_col(m_iter* i);
 void mi_next_row(m_iter* i);
@@ -55,5 +55,6 @@ void mi_prew_row(m_iter* i);
 
 bool mi_equals(m_iter* a, m_iter* b);
 
-int  mi_get(m_iter* i);
-void mi_set(m_iter* i, int val);
+double  mi_get(m_iter* i);
+void mi_set(m_iter* i, double val);
+*/

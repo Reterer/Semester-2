@@ -2,16 +2,16 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define NOT_AT_INDEX SIZE_MAX
+#define NOT_AT_INDEX ULLONG_MAX
 
 bool m_init(matrix** m) {
     *m = malloc(sizeof(matrix));
     if(*m == NULL)
         return false;
 
-    v_init_int((*m)->a);
-    v_init_int((*m)->b);
-    v_init_int((*m)->c);
+    v_init_int(&(*m)->a);
+    v_init_int(&(*m)->b);
+    v_init_double(&(*m)->c);
     (*m)->columns = 0;
 
     return true;
@@ -21,9 +21,9 @@ void m_deinit(matrix** m) {
     if(*m == NULL)
         return;
     
-    v_deinit_int((*m)->a);
-    v_deinit_int((*m)->b);
-    v_deinit_int((*m)->c);
+    v_deinit_int(&(*m)->a);
+    v_deinit_int(&(*m)->b);
+    v_deinit_double(&(*m)->c);
     free(*m);
 }
 
@@ -36,15 +36,15 @@ bool m_read(matrix* m, FILE* file){
     m->columns = cols;
     v_resize_int(m->a, rows+1);
 
-    int curr_element;
+    double curr_element;
     for(size_t i = 0; i < rows; ++i){
         v_set_int(m->a, i, v_size_int(m->b));
         for(size_t j = 0; j < cols; ++j){
-            if(fscanf(file, "%i", &curr_element) != 1)
+            if(fscanf(file, "%lf", &curr_element) != 1)
                 return false;
             if(curr_element != 0){
                 v_push_back_int(m->b, j);
-                v_push_back_int(m->c, curr_element);
+                v_push_back_double(m->c, curr_element);
             }
         }
     }
@@ -53,20 +53,32 @@ bool m_read(matrix* m, FILE* file){
 }
 
 static bool _print_v_int(FILE* file, vector_int* v, const char* ch) {
-    if(fprtinf(file, "%s", ch) == 0)
+    if(fprintf(file, "%s", ch) == 0)
             return false;
     for(size_t i = 0; i < v_size_int(v); ++i)
         if(fprintf(file, "%i ", v_get_int(v, i)) == 0)
             return false;
-    if(fprtinf(file, "%c", '\n') == 0)
+    if(fprintf(file, "%c", '\n') == 0)
+            return false;
+
+    return true;
+}
+static bool _print_v_double(FILE* file, vector_double* v, const char* ch) {
+    if(fprintf(file, "%s", ch) == 0)
+            return false;
+    for(size_t i = 0; i < v_size_double(v); ++i)
+        if(fprintf(file, "%lf ", v_get_double(v, i)) == 0)
+            return false;
+    if(fprintf(file, "%c", '\n') == 0)
             return false;
 
     return true;
 }
 
+
+
 bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
-    size_t rows = v_size(m->a) - 1;
-    size_t size_b = v_size(m->b);
+    size_t rows = v_size_int(m->a) - 1;
 
     if(mode == HUMAN) {
         size_t index_b = 0;
@@ -74,12 +86,12 @@ bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
             for(size_t j = 0; j < m->columns; ++j){
                 if(index_b < v_get_int(m->a, i + 1)\
                   && v_get_int(m->b, index_b) == j){
-                    if(fprintf(file, "%i ", v_get_int(m->c, index_b)) == 0)
+                    if(fprintf(file, "%lf ", v_get_double(m->c, index_b)) == 0)
                         return false;
                     index_b++;
                 }
                 else {
-                    if(fprintf(file, "%i ", 0) == 0)
+                    if(fprintf(file, "%lf ", 0.0) == 0)
                         return false;
                 }
             }
@@ -88,9 +100,9 @@ bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
         }    
     }
     else if(mode == INTERNAL) {
-        _print_v_int(file, m->a, "a");
-        _print_v_int(file, m->b, "b");
-        _print_v_int(file, m->c, "c");
+        _print_v_int(file, m->a, "a ");
+        _print_v_int(file, m->b, "b ");
+        _print_v_double(file, m->c, "c ");
 
     }
 
@@ -109,20 +121,20 @@ static size_t _find_col_idx_b(matrix* m, size_t row, size_t col){
     return NOT_AT_INDEX;
 }
 
-int m_get(matrix* m, size_t row, size_t col){
+double m_get(matrix* m, size_t row, size_t col){
     size_t index_b = _find_col_idx_b(m, row, col);
 
     if(index_b == NOT_AT_INDEX)
         return 0;
-    return v_get_int(m->c, index_b);
+    return v_get_double(m->c, index_b);
 }
 
-void m_set(matrix* m, size_t row, size_t col, int  val){
+void m_set(matrix* m, size_t row, size_t col, double  val){
     size_t index_b = _find_col_idx_b(m, row, col);
 
     if(index_b == NOT_AT_INDEX)
         return;
-    v_set_int(m->c, index_b, val);
+    v_set_double(m->c, index_b, val);
 }
 
 m_iter m_begin(matrix* m){
