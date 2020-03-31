@@ -104,7 +104,7 @@ T TEMPLATE(v_get, T)(VECTOR* v, size_t i){
     return v->buf[i];
 }
 
-bool TEMPLATE(v_are_equal,T)(VECTOR* a, VECTOR* b){
+bool TEMPLATE(v_equals,T)(VECTOR* a, VECTOR* b){
     if(a->size != b->size)
         return false;
     

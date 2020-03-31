@@ -31,7 +31,7 @@ void TEMPLATE(v_set, T)(VECTOR* v, size_t i, T val);
 T    TEMPLATE(v_get, T)(VECTOR* v, size_t i);
 
 /* Returns true if a and b are equal */
-bool TEMPLATE(v_are_equal,T)(VECTOR* a, VECTOR* b);
+bool TEMPLATE(v_equals,T)(VECTOR* a, VECTOR* b);
 
 #undef VECTOR
 #endif
