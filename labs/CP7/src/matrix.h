@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "vector/vector.h"
 
+#define NOT_AT_INDEX ULLONG_MAX
+
 typedef struct {
     vector_int* a;
     vector_int* b;
@@ -10,8 +12,8 @@ typedef struct {
 } matrix;
 typedef struct {
     matrix* m;
-    size_t row;
     size_t index_b; 
+    size_t row;
     // size_t col;
 } m_iter;
 
@@ -30,31 +32,36 @@ bool m_read(matrix* m, FILE* file);
 /* Print matrix to file */
 bool m_print(matrix*m, FILE* file, matrix_io_mode mode);
 
+
+size_t m_get_count_rows(matrix* m);
+
+size_t m_get_count_cols(matrix* m);
+
 /* Get value of the element of matrix */
 double m_get(matrix* m, size_t row, size_t col);
 
 /* Set value of the element of matrix           */
-/* If the element is zero,then it does nothing */
+/* If the element is zero,then it does nothing  */
 void m_set(matrix* m, size_t row, size_t col, double val);
 
-/* Returns an iterator pointing to the beginning of a row/col */
+/* Returns an iterator pointing to the first not empty elment of matrix*/
 m_iter m_begin(matrix* m);
-m_iter m_begin_by_row(matrix* m, size_t row);
-m_iter m_begin_by_col(matrix* m, size_t col);
-/* Returns an iterator pointing to the end of a row/col */
+m_iter m_begin_row(matrix* m, size_t row);
+
+/* Returns an iterator pointing to the end of matrix*/
 m_iter m_end(matrix* m);
-m_iter m_end_by_row(matrix* m, size_t row);
-m_iter m_end_by_col(matrix* m, size_t col);
+m_iter m_end_row(matrix* m, size_t row);
 
 /**********************************************************/
-/*
 void mi_next_col(m_iter* i);
 void mi_prew_col(m_iter* i);
 void mi_next_row(m_iter* i);
-void mi_prew_row(m_iter* i);
+void mi_prev_row(m_iter* i);
 
-bool mi_equals(m_iter* a, m_iter* b);
+bool mi_equals(m_iter a, m_iter b);
 
-double  mi_get(m_iter* i);
-void mi_set(m_iter* i, double val);
-*/
+double  mi_get(m_iter i);
+void    mi_set(m_iter i, double val);
+
+size_t mi_get_col(m_iter i);
+size_t mi_get_row(m_iter i);

@@ -33,7 +33,7 @@ void test_print_and_read(){
     m_deinit(&m);
 }
 
-void test_get_set_correct(){
+void test_get_set(){
     matrix* m = _make_matrix(MATRIX_PATH);
     
     TEST(m_get(m, 0, 0) == 0.\
@@ -55,11 +55,8 @@ void  test_begin(){
     matrix* m = _make_matrix(MATRIX_PATH);
     
     m_iter begin = m_begin(m);
-    m_iter begin_row = m_begin_by_row(m, 5);
 
-    TEST(begin.row == 0 && begin.index_b == 0\
-      && begin_row.row == 5 && begin_row.index_b == 6);
-
+    TEST(begin.row == 1 && begin.index_b == 0);
     m_deinit(&m);
 }
 
@@ -67,18 +64,79 @@ void test_end(){
     matrix* m = _make_matrix(MATRIX_PATH);
     
     m_iter end = m_end(m);
-    m_iter end_row = m_end_by_row(m, 0);
 
-    TEST(end.row == 6 && end.index_b == 13\
-      && end_row.row == 1 && end_row.index_b == 0);
+    TEST(end.row == 6 && end.index_b == 13);
 
     m_deinit(&m);
 }
 
+void test_mi_get_set(){
+    matrix* m = _make_matrix(MATRIX_PATH);
+    m_iter iter = m_begin(m);
+
+    mi_set(iter, 10.);
+    TEST(mi_get(iter) == 10.);
+    m_deinit(&m);
+}
+
+void test_mi_next_prev_col(){
+    matrix* m = _make_matrix(MATRIX_PATH);
+    
+    m_iter it = m_begin(m);
+
+    mi_prew_col(&it);
+    TEST(mi_equals(it, m_end(m)));
+
+    it = m_begin(m);
+    mi_next_col(&it);
+    mi_prew_col(&it);
+    TEST(mi_equals(it, m_begin(m)));
+
+    it = m_end(m);
+    mi_prew_col(&it);
+    mi_next_col(&it);
+    TEST(mi_equals(it, m_end(m)));
+
+    it = m_begin(m);
+    for(int i = 0; i < 5; i++)
+        mi_next_col(&it);
+    TEST(mi_get(it) == 2.);
+
+    mi_prew_col(&it);
+    TEST(mi_get(it) == 9.);
+
+    m_deinit(&m);
+}
+
+void test_mi_next_prev_row(){
+    matrix* m = _make_matrix(MATRIX_PATH);
+
+    m_iter it = m_begin(m);
+    mi_prev_row(&it);
+    TEST(mi_equals(it, m_end(m)));
+
+    it = m_begin(m);
+    mi_next_col(&it);
+    mi_next_row(&it);
+    TEST(mi_get(it) == 3.0);
+
+    mi_prev_row(&it);
+    TEST(mi_get(it) == 4.0);
+
+    mi_next_row(&it);
+    mi_next_row(&it);
+    TEST(mi_equals(it, m_end(m)));
+
+}
+
 void test_matrix(){
     TEST_START();
-    test_print_and_read();
-    test_get_set_correct();
+    // test_print_and_read();
+    test_get_set();
     test_begin();
     test_end();
+
+    test_mi_get_set();
+    test_mi_next_prev_col();
+    test_mi_next_prev_row();
 }

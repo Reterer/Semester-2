@@ -109,7 +109,7 @@ bool TEMPLATE(v_equals,T)(VECTOR* a, VECTOR* b){
         return false;
     
     for(size_t i = 0; i < a->size; ++i){
-        if(a->buf[i] != b->buf[i])
+        if(!T_COMPARE(a->buf[i],b->buf[i]))
             return false;
     }
 
