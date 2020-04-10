@@ -1,19 +1,19 @@
-CC=gcc
 CFLAGS=-Wall -std=c99 -pedantic -Iinclude
 OBJECTS=objects/log.o objects/vector.o
 
-all: cp7
+cp7: lib
+	gcc $(CFLAGS) src/*.c $(OBJECTS) -g -o main.out
 
 test: lib
-	$(CC) $(CFLAGS) src/test/*.c src/matrix.c $(OBJECTS) -g -o test.out
+	gcc $(CFLAGS) src/test/*.c src/matrix.c $(OBJECTS) -g -o test.out
 
-cp7: lib
-	$(CC) $(CFLAGS) src/*.c $(OBJECTS) -g -o main.out
+lib: objects/ objects/log.o objects/vector.o
 
-lib: log.o vector.o
+objects/:
+	mkdir objects
 
-log.o: include/log/log.c
-	$(CC) -c $(CFLAGS) include/log/log.c -o objects/log.o
+objects/log.o: include/log/log.c
+	gcc -c $(CFLAGS) include/log/log.c -o objects/log.o
 
-vector.o: src/vector/vector.c
-	$(CC) -c $(CFLAGS) src/vector/vector.c -o objects/vector.o
+objects/vector.o: src/vector/vector.c
+	gcc -c $(CFLAGS) src/vector/vector.c -o objects/vector.o

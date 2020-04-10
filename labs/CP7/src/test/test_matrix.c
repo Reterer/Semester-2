@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include "../matrix.h"
 
-#define MATRIX_PATH "test_files/matrix.txt"
-#define MATRIX_EMPTY_PATH "test_files/empty_matrix.txt"
+#define MATRIX_PATH "test_files/test/matrix.txt"
+#define MATRIX_EMPTY_PATH "test_files/test/empty_matrix.txt"
 
 static matrix* _make_matrix(char* path){
     matrix* m;

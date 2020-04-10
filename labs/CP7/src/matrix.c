@@ -27,11 +27,14 @@ void m_deinit(matrix** m) {
 }
 
 bool m_read(matrix* m, FILE* file){
-    size_t rows;
-    size_t cols;
-    
-    if(fscanf(file, "%zu %zu", &rows, &cols) != 2)
+    int rows;
+    int cols;
+
+    if(fscanf(file, "%i %i", &rows, &cols) != 2)
         return false;
+    if(rows < 0 || cols < 0)
+        return false;
+        
     m->columns = cols;
     v_resize_int(m->a, rows+1);
 
@@ -80,6 +83,8 @@ bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
 
     if(mode == HUMAN) {
         size_t index_b = 0;
+        fprintf(file, "%zu %zu\n", rows, m->columns);
+
         for(size_t i = 0; i < rows; ++i){
             for(size_t j = 0; j < m->columns; ++j){
                 if(index_b < v_get_int(m->a, i + 1)\
@@ -89,7 +94,7 @@ bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
                     index_b++;
                 }
                 else {
-                    if(fprintf(file, "%-4c ", '.') == 0)
+                    if(fprintf(file, "%-4.2lf ", 0.) == 0)
                         return false;
                 }
             }
@@ -98,9 +103,9 @@ bool m_print(matrix*m, FILE* file, matrix_io_mode mode){
         }    
     }
     else if(mode == INTERNAL) {
-        _print_v_int(file, m->a, "a ");
-        _print_v_int(file, m->b, "b ");
-        _print_v_double(file, m->c, "c ");
+        _print_v_int(file, m->a, "a: ");
+        _print_v_int(file, m->b, "b: ");
+        _print_v_double(file, m->c, "c: ");
 
     }
 
@@ -116,15 +121,22 @@ size_t m_get_count_cols(matrix* m){
 }
 
 static size_t _find_col_idx_b(matrix* m, size_t row, size_t col){
-    size_t index_b = v_get_int(m->a, row);
-    size_t index_b_end = v_get_int(m->a, row + 1);
+    size_t left_idx = v_get_int(m->a, row);
+    size_t right_idx = v_get_int(m->a, row + 1);
     
-    for(; index_b < index_b_end; ++index_b){
-        if(v_get_int(m->b, index_b) == col)
-            return index_b;
-    }
+    if(left_idx == right_idx)
+        return NOT_AT_INDEX;
 
-    return NOT_AT_INDEX;
+    while(left_idx + 1 < right_idx){
+        size_t mid = left_idx + (right_idx - left_idx)/2;
+        if(v_get_int(m->b, mid) <= col)
+            left_idx  = mid;
+        else
+            right_idx = mid;
+    }
+    if(left_idx + 1 > right_idx || v_get_int(m->b, left_idx) != col)
+        left_idx = NOT_AT_INDEX;
+    return left_idx;
 }
 
 double m_get(matrix* m, size_t row, size_t col){
@@ -235,16 +247,11 @@ void mi_next_row(m_iter* i){
     size_t curr_col = v_get_int(i->m->b, i->index_b);
     size_t rows     = v_size_int(i->m->a) - 1;
 
-    if(i->row+1 == rows){
-        i->index_b = v_get_int(i->m->a, rows);
-        i->row     = rows;
-        return;
-    }
-
-    while(i->row+1 < rows) {
-        i->row++;
+    i->row++;
+    while(i->row < rows) {
         if((i->index_b = _find_col_idx_b(i->m, i->row, curr_col)) != NOT_AT_INDEX)
             return;
+        i->row++;
     }
 
     i->index_b = v_get_int(i->m->a, rows);
@@ -256,12 +263,13 @@ void mi_prev_row(m_iter* i){
 
     while(i->row > 0) {
         i->row--;
+        
         if((i->index_b = _find_col_idx_b(i->m, i->row, curr_col)) != NOT_AT_INDEX)
             return;
     }
+
     i->row = v_size_int(i->m->a)-1;
     i->index_b = v_get_int(i->m->a, i->row);
-
 }
 
 bool mi_equals(m_iter a, m_iter b){
