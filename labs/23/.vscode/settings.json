@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "queue_template.h": "c",
+        "tree.h": "c",
+        "template.h": "c",
+        "stdlib.h": "c",
+        "enum.h": "c",
+        "log.h": "c"
+    }
+}

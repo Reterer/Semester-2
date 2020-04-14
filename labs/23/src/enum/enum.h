@@ -3,10 +3,13 @@
 
 typedef enum {
     UNIT_NONE,
+    UNIT_ROOT,
+    UNIT_DEAN,
+    UNIT_RECTOR,
     UNIT_STUDENT,
     UNIT_TEACHER,
+    UNIT_DIRECTOR,
     UNIT_PROFESSOR,
-    UNIT_DEAN,
 } unit;
 
 void unit_to_string(unit  unt, char* str);
