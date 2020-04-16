@@ -8,7 +8,7 @@
 
 bool t_init(treenodeptr* tree){
     *tree = NULL;
-    return true;
+    return t_insert_before(tree, UNIT_ROOT);
 }
 
 void t_deinit(treenodeptr* tree){
@@ -57,11 +57,16 @@ bool t_add(treenodeptr* root, char* path, unit val){
 }
 
 void _t_print(FILE* f, treenodeptr tree, int level){
-    if(tree == NULL)
+    if(tree == NULL){
         return;
+    }
 
     for(int i = 0; i < level; i++)
-        fprintf(f, "|\t");
+        fprintf(f, "│  ");
+    if(tree->brother == NULL && tree->child == NULL)
+        fprintf(f, "└──");
+    else
+        fprintf(f, "├──");
 
     char str_unit[MAX_UNIT_STR_LEN];
     unit_to_string(tree->val, str_unit);
@@ -76,40 +81,52 @@ void t_print(FILE* f, treenodeptr* tree){
     fprintf(f, "\n");
 }
 
-void _psuh_brothers_to_queue(treenodeptr_queue *q, treenodeptr node){
+bool _psuh_sons_into_queue(treenodeptr_queue *q, treenodeptr node){
+    node = node->child;
     while(node != NULL){
-        treenodeptr_queue_push_back(q, node);
+        if(treenodeptr_queue_push_back(q, node) == false)
+            return false;
         node = node->brother;
     }
+    return true;
 }
 
-bool t_func(FILE* f, treenodeptr* root){
-    if(*root == NULL)
-        return true;
+void t_func(FILE* f, treenodeptr* root){
+    if(*root == NULL){
+        LOG_ERR("Root is NULL");
+        return;
+    }
     
     int width_prev_lvl = -1;
     int width_curr_lvl = 0;
     bool is_monotonous = true;
-    
+    bool is_err_push   = false;
+
     treenodeptr_queue *curr_q;
     treenodeptr_queue *next_q;
-    treenodeptr_queue_init(&curr_q);
-    treenodeptr_queue_init(&next_q);
+    if(treenodeptr_queue_init(&curr_q) == false\
+    || treenodeptr_queue_init(&next_q) == false){
+        LOG_ERR("Can't init queue");
+        treenodeptr_queue_deinit(&curr_q);
+        treenodeptr_queue_deinit(&next_q);
+        return;
+    }
 
-    _psuh_brothers_to_queue(curr_q, *root);
-    while(!treenodeptr_queue_is_empty(curr_q)){
+    is_err_push = !_psuh_sons_into_queue(curr_q, *root);
+    while(!is_err_push && !treenodeptr_queue_is_empty(curr_q)){
         treenodeptr node = treenodeptr_queue_pop(curr_q);
         width_curr_lvl++;
 
-        node = node->child;
-        _psuh_brothers_to_queue(next_q, node);
+        if(_psuh_sons_into_queue(next_q, node) == false){
+            is_err_push = true;
+            break;
+        }
 
         if(treenodeptr_queue_is_empty(curr_q)){
             treenodeptr_queue *temp = next_q;
             next_q = curr_q;
             curr_q = temp;
 
-            printf("width lvl: %i\n", width_curr_lvl);
             if(width_prev_lvl == -1)
                 width_prev_lvl = width_curr_lvl;
             
@@ -125,26 +142,37 @@ bool t_func(FILE* f, treenodeptr* root){
 
     treenodeptr_queue_deinit(&curr_q);
     treenodeptr_queue_deinit(&next_q);
-
-    return is_monotonous;
+    if(is_err_push)
+        LOG_ERR("Can't push in queue");
+    else if(is_monotonous)
+        fprintf(f, "The tree monotonously decreases.\n");
+    else
+        fprintf(f, "The tree does not decrease monotonously.\n");
 }
 
-treenodeptr* t_find_node_by_path(treenodeptr* root, char* path){
+
+treenodeptr* _handle_invalid_path(){
+    fprintf(stderr, "Invalid path\n");
+    return NULL;
+}
+
+treenodeptr* _t_find_node_by_path(treenodeptr *root, char *path){
     if(*path == '\0')
         return root;
-    else if(*root == NULL){
-        fprintf(stderr, "Invalid path\n");
-        return NULL;
-    }
+    else if(*root == NULL)
+        return _handle_invalid_path();
 
-    if(*path == 'c'){
-        return t_find_node_by_path(&(*root)->child, path+1);
-    }
-    else if(*path == 'b'){
-        return t_find_node_by_path(&(*root)->brother, path+1);
-    }
-    else{
-        fprintf(stderr, "Invalid path\n");
-        return NULL;    
-    }
+    if(*path == 'c')
+        return _t_find_node_by_path(&(*root)->child, path+1);
+    else if(*path == 'b')
+        return _t_find_node_by_path(&(*root)->brother, path+1);
+    else
+        return _handle_invalid_path();  
+}
+
+treenodeptr* t_find_node_by_path(treenodeptr *root, char *path){
+    if (path[0] == 'c')
+        return _t_find_node_by_path(root, path);
+    else    
+        return _handle_invalid_path();
 }

@@ -23,6 +23,6 @@ bool t_add(treenodeptr* root, char* path, unit val);
 
 void t_print(FILE* f, treenodeptr* tree);
 
-bool t_func(FILE* f, treenodeptr* root);
+void t_func(FILE* f, treenodeptr* root);
 
 treenodeptr* t_find_node_by_path(treenodeptr* root, char* path);

@@ -5,6 +5,9 @@
         "template.h": "c",
         "stdlib.h": "c",
         "enum.h": "c",
-        "log.h": "c"
+        "log.h": "c",
+        "string.h": "c",
+        "stdio.h": "c",
+        "ctype.h": "c"
     }
 }

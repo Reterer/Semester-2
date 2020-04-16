@@ -5,6 +5,7 @@
 
 #include "tree/tree.h"
 #include "enum/enum.h"
+#include "log/log.h"
 
 #define MAX_SIZE_INPUT_BUF 256
 #define READ_STR_LEN 40
@@ -80,7 +81,7 @@ command get_command(FILE* fin, FILE* fout){
     char line_buff[MAX_SIZE_INPUT_BUF] = "";
     if(fprintf(fout, "%c ", INVITATION_CHAR));
     if(fgets(line_buff, MAX_SIZE_INPUT_BUF, fin) == NULL){
-        printf("eof, quite...\n");
+        printf("End of the file\n");
         res.type = CMD_STOP;
         return res;
     }
@@ -146,13 +147,13 @@ void print_help(FILE* f){
     \tPath is a sequence of characters 'c' or 'b' ('C' or 'B').\n\
     \tThe path may be empty \"\".\n\
     \tc - child\tb - brother\n\
-    \tExamples: \"\", \"cbc\"\n\
+    \tExamples: \"с\", \"cbc\"\n\
     \nENUM (value of node):\n\
-    \tUniversity hierarchy.\n\
-    \tRector, Director, Dean,\n\
-    \tProfessor, Teacher,\n\
-    \tStudent.\n\
-    \tcase insensitive.\n\n";
+    \tСase insensitive.\n\
+    \tUniversity hierarchy:\n\
+    \t  Rector, Director, Dean,\n\
+    \t  Professor, Teacher,\n\
+    \t  Student.\n\n";
     fprintf(f, help);
 }
 
@@ -169,13 +170,13 @@ void handle_command(command* cmd, treenodeptr* root, FILE* fout){
         t_remove(root, cmd->path);
         break;
     case CMD_CALCULATE:
-        if(t_func(fout, root) == true)
-            fprintf(fout, "The tree monotonously decreases.\n");
-        else
-            fprintf(fout, "the tree does not decrease monotonously.\n");
+        t_func(fout, root);
         break;
     case CMD_HELP:
         print_help(fout);
+        break;
+    case CMD_STOP:
+        fprintf(fout, "Quite.\n");
         break;
     case CMD_UNKNOWN:
         fprintf(fout, "Unknown command. Try again or typing help.\n");
@@ -187,8 +188,10 @@ void handle_command(command* cmd, treenodeptr* root, FILE* fout){
 
 int main(){
     treenodeptr root;
-    if(!t_init(&root))
+    if(t_init(&root) == false){
+        LOG_ERR("Can't init tree");
         return 1;    
+    }
     
     command cmd;
     cmd.type = CMD_NONE;
