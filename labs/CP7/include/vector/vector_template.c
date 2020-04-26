@@ -53,6 +53,9 @@ static bool TEMPLATE(_v_grow_cap, T)(VECTOR* v, size_t new_size){
 }
 
 static void TEMPLATE(_v_reduce_cap, T)(VECTOR* v, size_t new_size){
+    if(new_size > v->cap * 4 / 9)
+        return;
+    
     size_t new_cap = new_size * 3 / 2;
     if(new_cap > v->cap)
         new_cap = v->cap;
