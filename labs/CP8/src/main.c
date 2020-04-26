@@ -36,13 +36,19 @@ command get_command(FILE *fin, FILE *fout){
     char line_buff[MAX_SIZE_INPUT_BUF] = "";
     fprintf(fout, "%c ", INVITATION_CHAR);
     if(fgets(line_buff, MAX_SIZE_INPUT_BUF, fin) == NULL){
-        printf("End of the file\n");
+        printf("End of the file.\n");
         res.type = CMD_QUIT;
         return res;
     }
 
     char command_str[MAX_LEN_COMMAND_STR] = "";
     int read_code = _split_line(line_buff, command_str, &res.id, &res.value);
+    
+    if(read_code == -1){
+        res.type = CMD_NONE;
+        return res;
+    }
+
     for(int cmd_id = 0; cmd_info_arr[cmd_id].type != CMD_NONE; cmd_id++){
         if(cmd_info_arr[cmd_id].flags & CANT_WRITE)
             continue;

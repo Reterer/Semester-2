@@ -3,7 +3,7 @@ CTESTFILES = src/log/log.c src/tests/test_list.c
 CFLAGS = -Wall -pedantic -std=c99 -Isrc
 
 cp8:
-	gcc $(CFLAGS) $(CFILES) src/main.c -o main.out
+	gcc $(CFLAGS) $(CFILES) src/main.c -o main.out -g
 
 test:
 	gcc $(CFLAGS) $(CTESTFILES) src/test.c -o test.out

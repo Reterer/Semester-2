@@ -36,7 +36,9 @@ void print_list(command_func_args *args){
             fprintf(args->fout, "[%d]", int_list_iterator_get_val(it));
         int_list_iterator_next(&it);
     } else{
-        fprintf(args->fout, "is empty\n");
+        if(args->it != NULL && int_list_iterator_is_equals(it, *args->it))
+            fprintf(args->fout, "[(END)] ");
+        fprintf(args->fout, "is empty.\n");
         return;
     }
     while(!int_list_iterator_is_equals(it, int_list_end(args->list))){
@@ -179,7 +181,7 @@ void set_val(command_func_args *args){
             if(int_list_iterator_is_equals(*it, int_list_end(args->list)))
                 fprintf(args->fout, "This index points to the end of list.\n");
             else
-                int_list_iterator_set_val(*args->it, args->cmd.value);
+                int_list_iterator_set_val(*it, args->cmd.value);
         }
         free(it);
     }
@@ -196,6 +198,10 @@ void unknown(command_func_args *args){
 
 void err(command_func_args *args){
     fprintf(args->fout, "Invalid arguments, see help\n");
+}
+
+void none(command_func_args *args){
+    ;
 }
 
 const command_info cmd_info_arr[] = {
@@ -215,5 +221,5 @@ const command_info cmd_info_arr[] = {
     {"free-iter", "free", CMD_FREE_ITER, GET_0_ARG, free_iter},
     {"__UNKNOWN__", "", CMD_UNKNOWN, CANT_WRITE, unknown},
     {"__ERR__", "", CMD_ERR, CANT_WRITE, err},
-    {"__END_ARRAY__", "", CMD_NONE, CANT_WRITE, NULL},
+    {"__NONE__", "", CMD_NONE, CANT_WRITE, none},
 };

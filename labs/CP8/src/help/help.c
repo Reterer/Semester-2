@@ -46,7 +46,7 @@ void print_help(FILE* f){
     \t\tthe command uses the current iterator.\n\
     \n\
     \tset-val [id] <val>\t| set [id] <val>\n\
-    \t\tSets the value of the element under the id number11\n\
+    \t\tSets the value of the element under the id number.\n\
     \t\tIf the id is not specified,\n\
     \t\tthe command uses the current iterator.\n\
     \n\
