@@ -60,6 +60,7 @@ static bool TEMPLATE(T,list_grow)(LISTPTR l){
     return true;
 }
 
+// Аналог malloc LIST_EL, но только для динамического массива
 static size_t TEMPLATE(T,list_get_new_id)(LISTPTR l){
     size_t res = NOT_AN_INDEX;
     if(l->empty == NOT_AN_INDEX){
@@ -142,23 +143,6 @@ bool TEMPLATE(T,list_is_empty)(LISTPTR l){
 
 size_t TEMPLATE(T,list_get_size)(LISTPTR l){
     return l->size;
-}
-
-void TEMPLATE(T,list_reverse)(LISTPTR l){
-    size_t prev_el = NOT_AN_INDEX;
-    size_t curr_el = l->first;
-    while(curr_el != NOT_AN_INDEX){
-        size_t next_el = l->buf[curr_el].next;
-        l->buf[curr_el].next = prev_el;
-        
-        prev_el = curr_el;
-        curr_el = next_el;
-    }
-
-    size_t temp;
-    temp = l->first;
-    l->first = l->last;
-    l->last  = temp;
 }
 
 LIST_ITERATOR TEMPLATE(T,list_begin)(LISTPTR l){
@@ -263,7 +247,6 @@ bool TEMPLATE(T,list_iterator_remove)(LIST_ITERATOR *it){
     it->list->size--;
     return true;
 }
-
 
 #undef LIST_ITERATOR
 #undef LISTPTR

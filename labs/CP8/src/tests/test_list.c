@@ -59,26 +59,6 @@ void test_size(){
     int_list_deinit(&list);
 }
 
-void test_reverse(){
-    int_listptr list = _make_list();
-    int_list_reverse(list);
-
-    int_list_push_back(list, 42);
-    int_list_reverse(list);
-    TEST(int_list_pop_front(list) == 42\
-      && int_list_is_empty(list) == true);
-
-    int_list_push_back(list, 42);
-    int_list_push_back(list, 7);
-    int_list_push_back(list, 2);
-    int_list_reverse(list);
-    TEST(int_list_pop_front(list) == 2\
-      && int_list_pop_front(list) == 7\
-      && int_list_pop_front(list) == 42);
-
-    int_list_deinit(&list);
-}
-
 void test_begin(){
     int_listptr list = _make_list();
 
@@ -187,7 +167,6 @@ void test_list(){
     test_push_front();
     test_push_back();
     test_size();
-    test_reverse();
     test_begin();
     test_end();
     

@@ -1,7 +1,8 @@
 #include "help/help.h"
 
 void print_help(FILE* f){
-    static const char help[] = "COMMADS:\tSTANDART\t|\tSINONYM\n\
+    static const char help[] = 
+    "COMMADS:\tSTANDART\t|\tSINONYM\n\
     \tquit\t\t\t| q\n\
     \t\tQuits this program.\n\
     \n\

@@ -107,7 +107,7 @@ T TEMPLATE(T, v_get)(VECTOR *v, size_t i){
     return v->buf[i];
 }
 
-T    TEMPLATE(T, v_pop_top)(VECTOR *v){
+T    TEMPLATE(T, v_top)(VECTOR *v){
     T res = TEMPLATE(T, v_get)(v, TEMPLATE(T, v_size)(v)-1);
     TEMPLATE(T, v_resize)(v, TEMPLATE(T, v_size)(v)-1);
     return res;

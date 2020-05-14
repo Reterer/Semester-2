@@ -88,6 +88,23 @@ bool TEMPLATE(T,queue_push_back)(QUEUE *q, T val){
     return true;
 }
 
+bool TEMPLATE(T,queue_push_front)(QUEUE *q, T val){
+    QUEUE_EL *new_el = malloc(sizeof(QUEUE_EL));
+    if(new_el == NULL)
+        return false;
+    
+    new_el->val = val;
+    new_el->next = q->first;
+
+    if(q->size == 0)
+        q->last = new_el;
+    
+    q->first = new_el;
+    q->size++;
+
+    return true;
+}
+
 #undef QUEUE
 #undef QUEUE_EL
 #endif

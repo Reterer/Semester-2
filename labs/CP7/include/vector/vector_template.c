@@ -2,7 +2,7 @@
 #define MIN_CAP 4
 #endif
 
-#ifdef T
+// #ifdef T
 
 #include <stdlib.h>
 #include <vector/vector_template.h>
@@ -120,4 +120,4 @@ bool TEMPLATE(v_equals,T)(VECTOR* a, VECTOR* b){
 }
 
 #undef vector
-#endif
+// #endif

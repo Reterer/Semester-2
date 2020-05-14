@@ -43,8 +43,6 @@ T TEMPLATE(T,list_pop_front)(LISTPTR l);
 bool TEMPLATE(T,list_is_empty)(LISTPTR l);
 size_t TEMPLATE(T,list_get_size)(LISTPTR l);
 
-void TEMPLATE(T,list_reverse)(LISTPTR l);
-
 LIST_ITERATOR TEMPLATE(T,list_begin)(LISTPTR l);
 LIST_ITERATOR TEMPLATE(T,list_end)(LISTPTR l);
 

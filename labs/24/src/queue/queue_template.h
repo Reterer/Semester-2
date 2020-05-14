@@ -29,6 +29,8 @@ T TEMPLATE(T,queue_front)(QUEUE *q);
 T TEMPLATE(T,queue_pop)(QUEUE *q);
  
 bool TEMPLATE(T,queue_push_back)(QUEUE *q, T val);
+bool TEMPLATE(T,queue_push_front)(QUEUE *q, T val);
+
 #undef QUEUE
 #undef QUEUE_EL
 #endif

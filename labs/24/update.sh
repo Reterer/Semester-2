@@ -8,5 +8,3 @@ CFILES="$(find src -name *.c -type f | grep -v template)"
 
 # Обновляем зависиомости
 $CC -Isrc -MM $CFILES > Dependences
-
-# В следующий раз попробую использовать что-нибудь из разряда cmake

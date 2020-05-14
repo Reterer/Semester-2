@@ -5,6 +5,8 @@
         "log.h": "c",
         "stdbool.h": "c",
         "vector_template.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "tree_template.h": "c",
+        "template.h": "c"
     }
 }

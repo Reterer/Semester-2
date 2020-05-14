@@ -31,7 +31,8 @@ void TEMPLATE(T, v_set)(VECTOR *v, size_t i, T val);
 T    TEMPLATE(T, v_get)(VECTOR *v, size_t i);
 
 //  Stack implementation 
-T    TEMPLATE(T, v_pop_top)(VECTOR *v);
+//  Returns a value from the top of the stack and deletes it
+T    TEMPLATE(T, v_top)(VECTOR *v);
 
 #undef VECTOR
 #endif
