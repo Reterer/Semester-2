@@ -10,6 +10,7 @@ typedef struct {
     vector_double* c;
     size_t columns;
 } matrix;
+
 typedef struct {
     matrix* m;
     size_t index_b; 

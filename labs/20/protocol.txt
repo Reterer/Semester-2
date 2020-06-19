@@ -362,7 +362,83 @@ reterer@comp:~$ dd if=file of=file1 bs=1M
 10+0 records out
 10485760 bytes (10 MB, 10 MiB) copied, 0.0163679 s, 641 MB/s
 
-#-----------diff------------#
+#-----------diff, patch------------#
+reterer@comp:~/test$ cat file1
+Слово слово слово
 
+3 я строка
+что-то ...
+что-то еще
+reterer@comp:~/test$ cat file2
+Слово слово слово
+3 я строка
+Дописал что-то
+что-то .
+что-то еще
+reterer@comp:~/test$ diff file1 file2
+2d1
+<
+4c3,4
+< что-то ...
+---
+> Дописал что-то
+> что-то .
 
-#--- TOTAL 18 ---#
+reterer@comp:~/test$ diff -u file1 file2
+--- file1       2020-06-11 15:51:41.847877800 +0300
++++ file2       2020-06-11 15:52:19.607877800 +0300
+@@ -1,5 +1,5 @@
+ Слово слово слово
+-
+ 3 я строка
+-что-то ...
++Дописал что-то
++что-то .
+ что-то еще
+
+reterer@comp:~/test$ diff file1 file2 > fdiff
+reterer@comp:~/test$ patch file1 fdiff
+patching file file1
+reterer@comp:~/test$ diff -s file1 file2
+Files file1 and file2 are identical
+
+#-----------uniq------------#
+reterer@comp:~/test$ cat file
+1
+2
+1
+5
+5
+101
+65
+2
+reterer@comp:~/test$ sort file | uniq
+1
+101
+2
+5
+65
+
+#-----------join------------#
+reterer@comp:~/test$ cat shname
+3 Ал
+2 Ай
+4 Ба
+1 Ав
+reterer@comp:~/test$ cat shid
+4 198126
+1 198123
+2 198124
+3 198125
+reterer@comp:~/test$ join -t ' ' stname stid
+1 Ав 198123
+2 Ай 198124
+3 Ал 198125
+4 Ба  198126	
+reterer@comp:~/test$ join -t ' ' -o1.2 2.2 stname stid
+Ав 198123
+Ай 198124
+Ал 198125
+Ба 198126
+
+#--- TOTAL 22 ---#

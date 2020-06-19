@@ -10,19 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15a52246-f9a9-4384-a9c5-254b5aea0744" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../21/Hello wor/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../22/diff_index_tex.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../22/index.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../22/index.synctex.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../22/ЛР 22.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/23.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/command/command.c" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/command/command.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/command/command.h" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/command/command.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/list/list_template.c" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/list/list_template.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/list/list_template.h" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/list/list_template.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CP8/src/tests/test_list.c" beforeDir="false" afterPath="$PROJECT_DIR$/../CP8/src/tests/test_list.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../22/22.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP7/КП7.odt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP7/КП7.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/CP8.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/main" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/src/command/command.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/src/help/help.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/src/list/int_list.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/src/log/log.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/src/main.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CP8/КП8.odt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../srots/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CP7/src/matrix.h" beforeDir="false" afterPath="$PROJECT_DIR$/../CP7/src/matrix.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../srots/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/../../srots/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../srots/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../srots/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
