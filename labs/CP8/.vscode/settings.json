@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "stdbool.h": "c",
-        "log.h": "c",
-        "stdint.h": "c",
-        "list_template.h": "c",
-        "command.h": "c"
-    }
-}
